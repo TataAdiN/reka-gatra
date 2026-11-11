@@ -146,6 +146,7 @@ npm run preview
 
 | Shortcut | Aksi |
 | :--- | :--- |
+| <kbd>Ctrl</kbd> + <kbd>S</kbd> | Simpan file diagram (*Auto-save / overwrite* ke file yang sedang dibuka tanpa membuat file baru) |
 | <kbd>T</kbd> | Tambah Table Node baru di tengah kanvas |
 | <kbd>S</kbd> | Tambah Flow Shape baru di tengah kanvas |
 | <kbd>Ctrl</kbd> + <kbd>Z</kbd> | Urungkan aksi (*Undo*) |
