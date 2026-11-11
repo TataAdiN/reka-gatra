@@ -10,6 +10,7 @@ import TopBar from '../components/TopBar.vue'
 import InspectorPanel from '../components/InspectorPanel.vue'
 import ExportModal from '../components/ExportModal.vue'
 import ImportSqlModal from '../components/ImportSqlModal.vue'
+import ProjectModal from '../components/ProjectModal.vue'
 import ToastContainer from '../components/ToastContainer.vue'
 import TableNode from '../components/nodes/TableNode.vue'
 import FlowNode from '../components/nodes/FlowNode.vue'
@@ -17,12 +18,14 @@ import RelationEdge from '../components/edges/RelationEdge.vue'
 import FlowEdge from '../components/edges/FlowEdge.vue'
 import { useDiagramStore } from '../stores/diagram'
 import { useUiStore } from '../stores/ui'
+import { useProjectStore } from '../stores/project'
 
 const FLOW_ID = 'schema-canvas'
 const TABLE_WIDTH = 290
 
 const diagram = useDiagramStore()
 const ui = useUiStore()
+const project = useProjectStore()
 const { findNode, screenToFlowCoordinate, fitView } = useVueFlow(FLOW_ID)
 
 const wrapper = ref(null)
@@ -154,7 +157,10 @@ function onKeydown(e) {
   const mod = e.ctrlKey || e.metaKey
   const key = e.key.toLowerCase()
 
-  if (mod && key === 'z') {
+  if (mod && key === 's') {
+    e.preventDefault()
+    project.saveFile()
+  } else if (mod && key === 'z') {
     e.preventDefault()
     e.shiftKey ? diagram.redo() : diagram.undo()
   } else if (mod && key === 'y') {
@@ -167,7 +173,7 @@ function onKeydown(e) {
     diagram.removeSelected()
   } else if (key === 'escape') {
     diagram.clearSelection()
-    ui.exportOpen = ui.importOpen = false
+    ui.exportOpen = ui.importOpen = ui.projectOpen = false
   } else if (!mod && key === 't') {
     addTable()
   } else if (!mod && key === 's') {
@@ -253,6 +259,7 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown))
 
     <ExportModal v-if="ui.exportOpen" />
     <ImportSqlModal v-if="ui.importOpen" @import="onImport" />
+    <ProjectModal v-if="ui.projectOpen" />
     <ToastContainer />
   </div>
 </template>

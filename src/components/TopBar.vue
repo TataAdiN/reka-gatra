@@ -6,12 +6,14 @@ import {
 } from '@lucide/vue'
 import { useDiagramStore } from '../stores/diagram'
 import { useUiStore } from '../stores/ui'
+import { useProjectStore } from '../stores/project'
 import { FLOW_SHAPES, RELATIONSHIP_TYPES } from '../types/diagram.mjs'
 import { downloadText } from '../utils/generators.mjs'
 
 const emit = defineEmits(['add-table', 'add-shape', 'fit-view'])
 const diagram = useDiagramStore()
 const ui = useUiStore()
+const project = useProjectStore()
 
 const shapeIcons = { process: Square, decision: Diamond, document: FileText, terminal: RectangleHorizontal }
 
@@ -22,41 +24,17 @@ const onDoc = (e) => { if (!bar.value?.contains(e.target)) openMenu.value = null
 onMounted(() => document.addEventListener('pointerdown', onDoc, true))
 onBeforeUnmount(() => document.removeEventListener('pointerdown', onDoc, true))
 
+// ------------------------------------------------------------ shape menu
 function addShape(kind) {
   emit('add-shape', kind)
   openMenu.value = null
-}
-
-// ------------------------------------------------------------ JSON project files
-const fileInput = ref(null)
-function saveJson() {
-  downloadText('diagram.json', JSON.stringify(diagram.toJSON(), null, 2), 'application/json')
-  openMenu.value = null
-}
-function openJson(e) {
-  const file = e.target.files?.[0]
-  if (!file) return
-  file.text().then((txt) => {
-    try {
-      diagram.load(JSON.parse(txt))
-      ui.toast(`Loaded ${file.name}`)
-    } catch {
-      ui.toast('Invalid diagram file', 'error')
-    }
-  })
-  e.target.value = ''
-  openMenu.value = null
-}
-function clearCanvas() {
-  openMenu.value = null
-  if (confirm('Clear the whole canvas? (You can undo this)')) diagram.clearAll()
 }
 </script>
 
 <template>
   <header
     ref="bar"
-    class="pointer-events-auto flex h-12 items-center gap-1 border-b border-zinc-200 bg-white/90 px-3 backdrop-blur dark:border-zinc-800 dark:bg-zinc-900/90"
+    class="relative z-30 pointer-events-auto flex h-12 items-center gap-1 border-b border-zinc-200 bg-white/90 px-3 backdrop-blur dark:border-zinc-800 dark:bg-zinc-900/90"
   >
     <!-- Brand -->
     <div class="mr-2 flex items-center gap-2">
@@ -112,21 +90,42 @@ function clearCanvas() {
 
     <div class="flex-1" />
 
-    <!-- File / import / export -->
+    <!-- Active File & Status Indicator -->
+    <button
+      class="hidden sm:flex items-center gap-2 rounded-lg border border-zinc-200/80 bg-zinc-50 px-2.5 py-1 text-xs transition hover:border-zinc-300 hover:bg-zinc-100 dark:border-zinc-800 dark:bg-zinc-950/60 dark:hover:border-zinc-700 dark:hover:bg-zinc-900"
+      :title="project.hasUnsavedChanges ? 'Unsaved changes (Press Ctrl+S to save)' : 'Saved (Press Ctrl+S to re-save)'"
+      @click="ui.projectOpen = true"
+    >
+      <span
+        class="size-2 rounded-full shrink-0 transition-colors"
+        :class="project.hasUnsavedChanges ? 'bg-amber-400 animate-pulse' : 'bg-emerald-500'"
+      />
+      <span class="max-w-[140px] md:max-w-[180px] truncate font-medium text-zinc-700 dark:text-zinc-200">
+        {{ project.fileName }}
+      </span>
+      <span class="text-[10px] text-zinc-400 font-mono hidden md:inline">Ctrl+S</span>
+    </button>
+
+    <!-- Quick Save (Ctrl+S) -->
+    <button
+      class="btn btn-ghost !px-2"
+      :class="{ '!text-indigo-600 dark:!text-indigo-400': project.hasUnsavedChanges }"
+      :title="project.hasUnsavedChanges ? 'Save changes to file (Ctrl+S)' : 'Save diagram (Ctrl+S)'"
+      @click="project.saveFile()"
+    >
+      <Save class="size-4" />
+      <span class="hidden xl:inline text-xs">Save</span>
+    </button>
+
+    <!-- Import SQL -->
     <button class="btn btn-ghost" title="Paste CREATE TABLE statements" @click="ui.importOpen = true">
       <FileInput class="size-4" /> <span class="hidden lg:inline">Import SQL</span>
     </button>
 
-    <div class="relative">
-      <button class="btn btn-ghost !px-2" title="Project file" @click="toggle('file')"><Save class="size-4" /></button>
-      <div v-if="openMenu === 'file'" class="menu right-0 top-9">
-        <button class="menu-item" @click="saveJson"><Download class="size-3.5" /> Save diagram (.json)</button>
-        <button class="menu-item" @click="fileInput.click()"><Upload class="size-3.5" /> Open diagram (.json)</button>
-        <div class="my-1 h-px bg-zinc-100 dark:bg-zinc-800" />
-        <button class="menu-item !text-red-500" @click="clearCanvas"><Trash2 class="size-3.5" /> Clear canvas</button>
-      </div>
-      <input ref="fileInput" type="file" accept="application/json,.json" class="hidden" @change="openJson" />
-    </div>
+    <!-- Project file & canvas management -->
+    <button class="btn btn-ghost" title="Project file & storage" @click="ui.projectOpen = true">
+      <span class="hidden lg:inline">Project</span>
+    </button>
 
     <button class="btn btn-primary ml-1" @click="ui.exportOpen = true">
       <Download class="size-4" /> Export All

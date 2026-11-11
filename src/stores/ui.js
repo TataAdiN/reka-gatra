@@ -18,6 +18,7 @@ export const useUiStore = defineStore('ui', () => {
   const inspectorOpen = ref(true)
   const exportOpen = ref(false)
   const importOpen = ref(false)
+  const projectOpen = ref(false)
 
   /** @type {import('vue').Ref<Array<{id:number, message:string, kind:'success'|'error'|'info'}>>} */
   const toasts = ref([])
@@ -47,7 +48,7 @@ export const useUiStore = defineStore('ui', () => {
 
   return {
     theme, edgeStyle, defaultRelType, dialect,
-    inspectorOpen, exportOpen, importOpen,
+    inspectorOpen, exportOpen, importOpen, projectOpen,
     toasts, toast, dismissToast, toggleTheme,
   }
 })
