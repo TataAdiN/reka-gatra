@@ -1,0 +1,28 @@
+# REKA GATRA NON-COMMERCIAL SOFTWARE LICENSE
+
+Hak Cipta (c) 2026 Pengembang Reka Gatra. Seluruh Hak Cipta Dilindungi Undang-Undang.
+Copyright (c) 2026 Reka Gatra Developers. All Rights Reserved.
+
+Perangkat lunak ini didistribusikan di bawah lisensi non-komersial (*Source-Available Non-Commercial License*).
+
+---
+
+### 1. Izin Penggunaan Non-Komersial (Permitted Non-Commercial Use)
+Dengan ini izin diberikan secara cuma-cuma kepada siapa saja yang memperoleh salinan perangkat lunak ini beserta file dokumentasi terkait ("Perangkat Lunak"), untuk:
+- Menggunakan, mempelajari, menguji, dan memodifikasi kode sumber untuk keperluan pribadi, pembelajaran, akademis, penelitian, portofolio nirlaba, atau evaluasi internal non-komersial.
+- Membuat salinan cadangan atau fork untuk keperluan pengembangan pribadi non-komersial, dengan syarat mencantumkan pemberitahuan hak cipta dan lisensi ini pada setiap salinan.
+
+### 2. Larangan Penggunaan Komersial (Commercial Use Restrictions)
+Setiap bentuk pemanfaatan Perangkat Lunak untuk tujuan komersial atau keuntungan finansial oleh pihak ketiga **DILARANG KERAS**, kecuali dengan persetujuan atau lisensi tertulis dari Pemilik Hak Cipta. Larangan ini mencakup namun tidak terbatas pada:
+1. **Hosting & Layanan SaaS (Software as a Service):** Memasang, menjalankan, atau meng-host Perangkat Lunak pada server publik/privat untuk menyediakan layanan berbayar, langganan, freemium, monetisasi iklan, atau sebagai fitur komersial bagi pengguna pihak ketiga.
+2. **Penjualan & Distribusi Berbayar:** Menjual, menyewakan, melisensikan ulang (*sublicense*), atau mendistribusikan salinan maupun produk turunan Perangkat Lunak ini untuk mendapatkan kompensasi moneter.
+3. **Penyertaan dalam Produk Komersial:** Membundel, mengemas ulang (*re-branding / white-labeling*), atau menyematkan Perangkat Lunak ke dalam aplikasi, tema, template, atau bundel solusi komersial tertutup.
+
+### 3. Hak Eksklusif Pemilik (Exclusive Rights of Licensor)
+Pemilik Hak Cipta memegang hak eksklusif penuh untuk:
+- Memasang, meng-host, mendistribusikan, dan memonetisasi Perangkat Lunak ini pada infrastruktur/domain milik sendiri sebagai produk mandiri atau layanan komersial.
+- Menerbitkan lisensi komersial terpisah (*dual-licensing*) kepada entitas lain sesuai diskresi pemilik.
+
+### 4. Tanpa Jaminan (Disclaimer of Warranty)
+PERANGKAT LUNAK INI DISEDIAKAN "SEBAGAIMANA ADANYA" (*AS IS*), TANPA JAMINAN APA PUN, BAIK TERSURAT MAUPUN TERSIRAT, TERMASUK NAMUN TIDAK TERBATAS PADA JAMINAN KELAYAKAN UNTUK DIPERJUALBELIKAN ATAU KESESUAIAN UNTUK TUJUAN TERTENTU. PEMILIK HAK CIPTA TIDAK BERTANGGUNG JAWAB ATAS KLAIM, KERUSAKAN, ATAU KEWAJIBAN LAINNYA YANG TIMBUL DARI PENGGUNAAN PERANGKAT LUNAK INI.
+
